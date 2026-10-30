@@ -52,9 +52,7 @@ export default function About() {
               From crafting sleek, responsive{" "}
               <span className="highlight-pill">front-end interfaces</span> to
               architecting robust{" "}
-              <span className="highlight-pill">back-end systems</span>, I&apos;ve
-              built a diverse portfolio of projects, including dynamic
-              single-page apps, e-commerce platforms, and productivity tools.
+              <span className="highlight-pill">back-end systems</span>, I've built custom Laravel applications, WordPress websites, e-commerce solutions, and API-driven platforms, focusing on responsive UI, backend functionality, and seamless integrations.
             </p>
             <p>
               I&apos;m also deeply interested in using{" "}
