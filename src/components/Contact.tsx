@@ -12,8 +12,8 @@ const contactItems = [
   {
     index: "01",
     label: "Email",
-    value: "themuneerahmad@gmail.com",
-    href: "mailto:themuneerahmad@gmail.com",
+    value: "themuneerahmad.80@gmail.com",
+    href: "mailto:themuneerahmad.80@gmail.com",
   },
   {
     index: "02",

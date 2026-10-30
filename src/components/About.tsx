@@ -11,7 +11,7 @@ import SectionBadge from "./SectionBadge";
 
 const details = [
   { label: "Name", value: "Muneer Ahmad", icon: User },
-  { label: "Email", value: "themuneerahmad@gmail.com", icon: Mail },
+  { label: "Email", value: "themuneerahmad.80@gmail.com", icon: Mail },
   { label: "Phone", value: "+92 3139027798", icon: Phone },
   { label: "Location", value: "Islamabad, Pakistan", icon: MapPin },
 ];

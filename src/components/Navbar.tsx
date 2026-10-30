@@ -23,7 +23,6 @@ const navLinks = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
   const [portfolioOpen, setPortfolioOpen] = useState(false);
   const [mobilePortfolioOpen, setMobilePortfolioOpen] = useState(false);
   const [active, setActive] = useState("home");
@@ -58,27 +57,13 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
-    if (!open) return;
-    document.body.style.overflow = "hidden";
+    document.body.style.overflow = open ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
     };
   }, [open]);
 
-  useEffect(() => {
-    if (open) return;
-    if (!mounted) return;
-    const timer = window.setTimeout(() => setMounted(false), 700);
-    return () => window.clearTimeout(timer);
-  }, [open, mounted]);
-
-  const openMenu = () => {
-    setMounted(true);
-    // Allow the closed (off-screen) state to paint before sliding in
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => setOpen(true));
-    });
-  };
+  const openMenu = () => setOpen(true);
 
   const closeMenu = () => {
     setOpen(false);
@@ -106,12 +91,11 @@ export default function Navbar() {
           ? "border-b border-white/5 bg-black/80 py-0 backdrop-blur-xl"
           : "bg-transparent py-1"
       }`}
-      data-aos="fade-down"
     >
       <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link
           href="/"
-          className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent text-lg font-bold text-black transition hover:scale-105"
+          className="relative z-[60] flex h-10 w-10 items-center justify-center rounded-xl bg-accent text-lg font-bold text-black transition hover:scale-105"
           aria-label="Muneer Ahmad – Back to Home"
         >
           M
@@ -182,177 +166,181 @@ export default function Navbar() {
           </Link>
           <button
             type="button"
-            className="group z-40 flex h-10 w-10 cursor-pointer flex-col justify-center gap-2 md:hidden"
-            aria-label="Menu"
+            className="relative z-[60] flex h-11 w-11 cursor-pointer flex-col items-end justify-center gap-1.5 rounded-lg border border-white/15 bg-white/5 px-2.5 md:hidden"
+            aria-label={open ? "Close menu" : "Menu"}
             aria-expanded={open}
-            onClick={openMenu}
+            aria-controls="mobile-sidebar"
+            onClick={() => (open ? closeMenu() : openMenu())}
           >
-            <span className="block h-0.5 w-full bg-white transition-all duration-300" />
-            <span className="block h-0.5 w-3/4 bg-white transition-all duration-300 group-hover:w-full" />
+            <span
+              className={`block h-0.5 w-full origin-center bg-white transition-all duration-300 ${
+                open ? "translate-y-[4px] rotate-45" : ""
+              }`}
+            />
+            <span
+              className={`block h-0.5 w-3/4 bg-white transition-all duration-300 ${
+                open ? "w-full -translate-y-[4px] -rotate-45" : ""
+              }`}
+            />
           </button>
         </div>
       </nav>
 
-      {/* Mobile overlay + drawer */}
-      {mounted && (
-        <>
-          <div
-            className={`fixed inset-0 z-50 bg-black/80 transition-opacity duration-500 md:hidden ${
-              open
-                ? "pointer-events-auto opacity-100"
-                : "pointer-events-none opacity-0"
-            }`}
-            onClick={closeMenu}
-            aria-hidden="true"
-          />
+      {/* Mobile overlay + drawer — always mounted for reliable open/close */}
+      <div
+        className={`fixed inset-0 z-50 bg-black/80 transition-opacity duration-500 md:hidden ${
+          open
+            ? "pointer-events-auto opacity-100"
+            : "pointer-events-none opacity-0"
+        }`}
+        onClick={closeMenu}
+        aria-hidden={!open}
+      />
 
-          <aside
-            id="mobile-sidebar"
-            role="dialog"
-            aria-modal="true"
-            aria-label="Mobile navigation"
-            className={`fixed top-0 right-0 z-50 h-full w-full transform border-l border-white/20 bg-black transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] sm:w-[25rem] md:hidden ${
-              open ? "translate-x-0" : "translate-x-full"
-            }`}
-          >
-            <div className="relative z-10 flex h-full flex-col px-8 py-10">
-              <div className="mb-8 flex items-center justify-between border-b border-white/20 pb-8">
-                <h2 className="text-xl font-bold uppercase tracking-widest text-white">
-                  Menu
-                </h2>
-                <button
-                  type="button"
-                  className="group flex items-center justify-center text-white transition-colors duration-300 hover:text-accent focus-visible:outline-none"
-                  aria-label="Close menu"
-                  onClick={closeMenu}
-                >
-                  <X
-                    className="transition-transform duration-500 group-hover:rotate-90"
-                    size={36}
-                    strokeWidth={1}
-                  />
-                </button>
-              </div>
+      <aside
+        id="mobile-sidebar"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Mobile navigation"
+        aria-hidden={!open}
+        className={`fixed top-0 right-0 z-50 h-full w-full transform border-l border-white/20 bg-black transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] sm:w-[25rem] md:hidden ${
+          open
+            ? "pointer-events-auto translate-x-0"
+            : "pointer-events-none translate-x-full"
+        }`}
+      >
+        <div className="relative z-10 flex h-full flex-col px-8 py-10">
+          <div className="mb-8 flex items-center justify-between border-b border-white/20 pb-8">
+            <h2 className="text-xl font-bold uppercase tracking-widest text-white">
+              Menu
+            </h2>
+            <button
+              type="button"
+              className="group flex items-center justify-center text-white transition-colors duration-300 hover:text-accent focus-visible:outline-none"
+              aria-label="Close menu"
+              onClick={closeMenu}
+            >
+              <X
+                className="transition-transform duration-500 group-hover:rotate-90"
+                size={36}
+                strokeWidth={1}
+              />
+            </button>
+          </div>
 
-              <div className="flex-1 overflow-y-auto scrollbar-none [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
-                <nav className="flex flex-col">
-                  {navLinks.map((link, index) => {
-                    const delay = 200 + index * 100;
-                    const itemActive = isActive(link.href, link.children);
+          <div className="flex-1 overflow-y-auto scrollbar-none [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+            <nav className="flex flex-col">
+              {navLinks.map((link, index) => {
+                const delay = open ? 120 + index * 80 : 0;
+                const itemActive = isActive(link.href, link.children);
 
-                    if (link.children) {
-                      return (
-                        <div
-                          key={link.label}
-                          className={`overflow-hidden border-b border-white/10 transition-all duration-700 ease-out ${
-                            open
-                              ? "translate-y-0 opacity-100"
-                              : "translate-y-8 opacity-0"
-                          }`}
-                          style={{ transitionDelay: `${delay}ms` }}
-                        >
-                          <button
-                            type="button"
-                            className="group flex w-full items-center justify-between py-6 transition-colors duration-300 focus-visible:outline-none"
-                            onClick={() =>
-                              setMobilePortfolioOpen((v) => !v)
-                            }
-                            aria-expanded={mobilePortfolioOpen}
-                          >
-                            <span
-                              className={`text-4xl font-black uppercase tracking-tighter transition-colors duration-300 sm:text-5xl ${
-                                itemActive || mobilePortfolioOpen
-                                  ? "text-accent"
-                                  : "text-white group-hover:text-accent"
-                              }`}
-                            >
-                              {link.label}
-                            </span>
-                            {mobilePortfolioOpen ? (
-                              <Minus className="h-6 w-6 text-white group-hover:text-accent" />
-                            ) : (
-                              <Plus className="h-6 w-6 text-white group-hover:text-accent" />
-                            )}
-                          </button>
-
-                          <div
-                            className={`overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-                              mobilePortfolioOpen
-                                ? "mb-4 max-h-48 opacity-100"
-                                : "mb-0 max-h-0 opacity-0"
-                            }`}
-                          >
-                            <ul
-                              className="mt-2 flex flex-col gap-4 border-l-2 border-accent pl-6"
-                              role="list"
-                            >
-                              {link.children.map((child) => (
-                                <li key={child.label}>
-                                  <a
-                                    href={child.href}
-                                    className="group flex items-center gap-4 py-2 text-white/50 transition-colors duration-300 hover:text-white"
-                                    onClick={closeMenu}
-                                  >
-                                    <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-2" />
-                                    <span className="text-lg font-bold uppercase tracking-widest">
-                                      {child.label}
-                                    </span>
-                                  </a>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        </div>
-                      );
-                    }
-
-                    return (
-                      <a
-                        key={link.label}
-                        href={link.href}
-                        className={`group flex items-center justify-between border-b border-white/10 py-6 transition-all duration-700 ease-out focus-visible:outline-none ${
-                          open
-                            ? "translate-y-0 opacity-100"
-                            : "translate-y-8 opacity-0"
-                        }`}
-                        style={{ transitionDelay: `${delay}ms` }}
-                        onClick={closeMenu}
+                if (link.children) {
+                  return (
+                    <div
+                      key={link.label}
+                      className={`overflow-hidden border-b border-white/10 transition-all duration-500 ease-out ${
+                        open
+                          ? "translate-y-0 opacity-100"
+                          : "translate-y-8 opacity-0"
+                      }`}
+                      style={{ transitionDelay: `${delay}ms` }}
+                    >
+                      <button
+                        type="button"
+                        className="group flex w-full items-center justify-between py-6 transition-colors duration-300 focus-visible:outline-none"
+                        onClick={() => setMobilePortfolioOpen((v) => !v)}
+                        aria-expanded={mobilePortfolioOpen}
                       >
                         <span
                           className={`text-4xl font-black uppercase tracking-tighter transition-colors duration-300 sm:text-5xl ${
-                            itemActive
+                            itemActive || mobilePortfolioOpen
                               ? "text-accent"
                               : "text-white group-hover:text-accent"
                           }`}
                         >
                           {link.label}
                         </span>
-                      </a>
-                    );
-                  })}
-                </nav>
-              </div>
+                        {mobilePortfolioOpen ? (
+                          <Minus className="h-6 w-6 text-white group-hover:text-accent" />
+                        ) : (
+                          <Plus className="h-6 w-6 text-white group-hover:text-accent" />
+                        )}
+                      </button>
 
-              <div
-                className={`pt-8 transition-all duration-1000 ease-out ${
-                  open
-                    ? "translate-y-0 opacity-100"
-                    : "translate-y-8 opacity-0"
-                }`}
-                style={{ transitionDelay: "600ms" }}
-              >
-                <Link
-                  href="/#contact"
-                  className="flex w-full items-center justify-center bg-white py-5 text-lg font-black uppercase tracking-[0.2em] text-black transition-transform duration-300 hover:scale-[1.02] active:scale-95 focus-visible:outline-none"
-                  onClick={closeMenu}
-                >
-                  Get in Touch
-                </Link>
-              </div>
-            </div>
-          </aside>
-        </>
-      )}
+                      <div
+                        className={`overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                          mobilePortfolioOpen
+                            ? "mb-4 max-h-48 opacity-100"
+                            : "mb-0 max-h-0 opacity-0"
+                        }`}
+                      >
+                        <ul
+                          className="mt-2 flex flex-col gap-4 border-l-2 border-accent pl-6"
+                          role="list"
+                        >
+                          {link.children.map((child) => (
+                            <li key={child.label}>
+                              <a
+                                href={child.href}
+                                className="group flex items-center gap-4 py-2 text-white/50 transition-colors duration-300 hover:text-white"
+                                onClick={closeMenu}
+                              >
+                                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-2" />
+                                <span className="text-lg font-bold uppercase tracking-widest">
+                                  {child.label}
+                                </span>
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  );
+                }
+
+                return (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    className={`group flex items-center justify-between border-b border-white/10 py-6 transition-all duration-500 ease-out focus-visible:outline-none ${
+                      open
+                        ? "translate-y-0 opacity-100"
+                        : "translate-y-8 opacity-0"
+                    }`}
+                    style={{ transitionDelay: `${delay}ms` }}
+                    onClick={closeMenu}
+                  >
+                    <span
+                      className={`text-4xl font-black uppercase tracking-tighter transition-colors duration-300 sm:text-5xl ${
+                        itemActive
+                          ? "text-accent"
+                          : "text-white group-hover:text-accent"
+                      }`}
+                    >
+                      {link.label}
+                    </span>
+                  </a>
+                );
+              })}
+            </nav>
+          </div>
+
+          <div
+            className={`pt-8 transition-all duration-500 ease-out ${
+              open ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
+            }`}
+            style={{ transitionDelay: open ? "450ms" : "0ms" }}
+          >
+            <Link
+              href="/#contact"
+              className="flex w-full items-center justify-center bg-white py-5 text-lg font-black uppercase tracking-[0.2em] text-black transition-transform duration-300 hover:scale-[1.02] active:scale-95 focus-visible:outline-none"
+              onClick={closeMenu}
+            >
+              Get in Touch
+            </Link>
+          </div>
+        </div>
+      </aside>
     </header>
   );
 }
