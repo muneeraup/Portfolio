@@ -7,11 +7,9 @@ import {
   ArrowLeft,
   CircleCheck,
   ExternalLink,
-  Lock,
   X,
 } from "lucide-react";
 import type { Project } from "@/data/projects";
-import { GitHubIcon } from "@/components/SocialIcons";
 
 type ProjectDetailProps = {
   project: Project;
@@ -75,28 +73,8 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
               ))}
             </div>
 
-            <div className="flex shrink-0 items-center gap-4">
-              {project.privateRepo ? (
-                <div
-                  className="flex cursor-not-allowed items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-6 py-3 text-sm font-bold text-white/50"
-                  title="Git repo is private"
-                >
-                  <Lock className="h-4 w-4" />
-                  Private Repo
-                </div>
-              ) : project.repoUrl ? (
-                <a
-                  href={project.repoUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-6 py-3 text-sm font-bold text-white transition-all hover:border-accent/50 hover:bg-accent/10"
-                >
-                  <GitHubIcon className="h-4 w-4" />
-                  Code
-                </a>
-              ) : null}
-
-              {project.liveUrl && (
+            {project.liveUrl && (
+              <div className="flex shrink-0 items-center gap-4">
                 <a
                   href={project.liveUrl}
                   target="_blank"
@@ -106,8 +84,8 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
                   <ExternalLink className="h-[18px] w-[18px]" />
                   Live Demo
                 </a>
-              )}
-            </div>
+              </div>
+            )}
           </div>
         </div>
 

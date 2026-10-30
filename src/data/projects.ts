@@ -9,8 +9,6 @@ export type Project = {
   features: string[];
   gallery: string[];
   liveUrl?: string;
-  repoUrl?: string;
-  privateRepo?: boolean;
 };
 
 export const projects: Project[] = [
@@ -55,8 +53,6 @@ export const projects: Project[] = [
       "/projects/proqure-4.png",
     ],
     liveUrl: "https://proqure.vercel.app/",
-    repoUrl:
-      "https://github.com/talesofcarter/mern-final-project-talesofcarter",
   },
   {
     slug: "zidallie",
@@ -90,7 +86,6 @@ export const projects: Project[] = [
       "/projects/zidallie-modal.png",
     ],
     liveUrl: "https://www.zidallie.co.ke/",
-    privateRepo: true,
   },
   {
     slug: "robofarm",
@@ -131,7 +126,6 @@ export const projects: Project[] = [
       "/projects/robofarm-5.png",
     ],
     liveUrl: "https://robofarm.vercel.app/",
-    repoUrl: "https://github.com/talesofcarter/robofarm",
   },
 ];
 
