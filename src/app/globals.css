@@ -1,26 +1,182 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #000000;
+  --foreground: #ffffff;
+  --accent: #c5ff41;
+  --muted: #9ca3af;
+  --card: #111111;
+  --card-border: rgba(255, 255, 255, 0.08);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
+  --color-muted: var(--muted);
+  --color-card: var(--card);
+  --color-card-border: var(--card-border);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--accent) 40%, transparent);
+  color: #000;
+}
+
+.hero-rings {
+  background-image: radial-gradient(
+      circle at center,
+      transparent 0%,
+      transparent 18%,
+      rgba(197, 255, 65, 0.035) 18.5%,
+      transparent 19%,
+      transparent 28%,
+      rgba(197, 255, 65, 0.03) 28.5%,
+      transparent 29%,
+      transparent 38%,
+      rgba(197, 255, 65, 0.025) 38.5%,
+      transparent 39%,
+      transparent 48%,
+      rgba(197, 255, 65, 0.02) 48.5%,
+      transparent 49%,
+      transparent 58%,
+      rgba(197, 255, 65, 0.018) 58.5%,
+      transparent 59%,
+      transparent 68%,
+      rgba(197, 255, 65, 0.015) 68.5%,
+      transparent 69%,
+      transparent 78%,
+      rgba(197, 255, 65, 0.012) 78.5%,
+      transparent 79%,
+      transparent 88%,
+      rgba(197, 255, 65, 0.01) 88.5%,
+      transparent 89%
+    ),
+    radial-gradient(
+      ellipse 80% 60% at 50% 45%,
+      rgba(197, 255, 65, 0.12) 0%,
+      transparent 55%
+    );
+}
+
+.text-gradient-accent {
+  background: linear-gradient(135deg, #c5ff41 0%, #8fd914 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.glass-card {
+  background: linear-gradient(
+    145deg,
+    rgba(24, 24, 24, 0.9) 0%,
+    rgba(12, 12, 12, 0.95) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+}
+
+.skill-chip {
+  background: linear-gradient(180deg, #1a1a1a 0%, #121212 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.skill-chip:hover {
+  border-color: rgba(197, 255, 65, 0.35);
+  box-shadow: 0 0 20px rgba(197, 255, 65, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.service-card {
+  background: #111111;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service-card:hover,
+.service-card.active {
+  border-color: #c5ff41;
+  box-shadow: 0 0 24px rgba(197, 255, 65, 0.15);
+}
+
+.highlight-pill {
+  display: inline;
+  padding: 0.1em 0.4em;
+  border-radius: 9999px;
+  background: rgba(197, 255, 65, 0.12);
+  color: #c5ff41;
+  white-space: nowrap;
+}
+
+.timeline-dot {
+  box-shadow: 0 0 12px #c5ff41;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.7s ease-out both;
+}
+
+@keyframes blink-cursor {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.animate-blink-cursor {
+  animation: blink-cursor 1.2s step-end infinite;
+}
+
+.delay-100 {
+  animation-delay: 0.1s;
+}
+.delay-200 {
+  animation-delay: 0.2s;
+}
+.delay-300 {
+  animation-delay: 0.3s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .animate-fade-up,
+  .animate-blink-cursor,
+  [data-aos] {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
