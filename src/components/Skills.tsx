@@ -7,8 +7,11 @@ const skills = [
   { name: "JavaScript", icon: "/icons/javascript.svg" },
   { name: "TypeScript", icon: "/icons/typescript.svg" },
   { name: "React", icon: "/icons/react.svg" },
+  { name: "React Native", icon: "/icons/react-native.svg" },
+  { name: "Expo", icon: "/icons/expo.svg" },
   { name: "Next.js", icon: "/icons/next.svg" },
   { name: "Vue.js", icon: "/icons/vue.svg" },
+
   { name: "Tailwind", icon: "/icons/tailwind.svg" },
   { name: "Bootstrap", icon: "/icons/bootstrap.svg" },
   { name: "PHP", icon: "/icons/php.svg" },
@@ -20,7 +23,6 @@ const skills = [
   { name: "MySQL", icon: "/icons/mysql.svg" },
   { name: "Git", icon: "/icons/git.svg" },
   { name: "Docker", icon: "/icons/docker.svg" },
-  { name: "Kubernetes", icon: "/icons/kubernetes.svg" },
 ];
 
 export default function Skills() {

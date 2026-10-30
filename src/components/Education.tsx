@@ -11,36 +11,11 @@ import SectionBadge from "./SectionBadge";
 
 const education = [
   {
-    title: "AI Essentials",
-    school: "Moringa School",
-    period: "Jan 2026 - Feb 2026",
+    title: "Bsc Computer Science",
+    school: "The University of Agriculture, Peshawar",
+    period: "Sep 2016 - Dec 2020",
     description:
-      "An intensive program focused on the practical implementation of Generative AI within modern software engineering workflows. Built practical competence in integrating AI into real-world engineering pipelines to drastically improve development speed and problem-solving efficiency.",
-    highlights: [
-      "Improved code quality through AI-assisted refactoring and debugging.",
-      "Implemented AI-supported Test-Driven Development (TDD) pipelines.",
-      "Accelerated the learning and adoption of new frameworks, APIs, and languages.",
-      "Optimized developer productivity using structured prompt engineering.",
-    ],
-  },
-  {
-    title: "Full Stack Web Development",
-    school: "Power Learn Project Africa",
-    period: "Jul 2025 - Nov 2025",
-    description:
-      "Completed a rigorous 16-week software engineering bootcamp with a specialization in full-stack development using the MERN stack (MongoDB, Express.js, React, Node.js).",
-    highlights: [
-      "Mastered modern web architecture and software engineering fundamentals.",
-      "Developed robust backends using Python, PostgreSQL, and MySQL.",
-      "Gained foundational knowledge in startup development and tech entrepreneurship.",
-    ],
-  },
-  {
-    title: "Bachelor of Business Management",
-    school: "Moi University",
-    period: "Sep 2014 - Oct 2019",
-    description:
-      "Specialized in Purchasing and Supplies Management. Acquired a strong foundation in business operations, strategic resource allocation, and project management—developing analytical and critical thinking skills that deeply complement my technical problem-solving capabilities as a software engineer.",
+      "Earned a Bachelor's degree in Computer Science from The University of Agriculture, Peshawar, building a strong foundation in software development, programming, database management, and computer systems. Developed analytical thinking, problem-solving, and technical skills through academic coursework and practical projects, laying the groundwork for a career in full-stack web development and software engineering.",
     highlights: [],
   },
 ];
