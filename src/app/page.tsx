@@ -13,9 +13,9 @@ import ScrollToTop from "@/components/ScrollToTop";
 
 export default function Home() {
   return (
-    <>
+    <div className="relative w-full max-w-[100vw] overflow-x-clip">
       <Navbar />
-      <main>
+      <main className="w-full overflow-x-clip">
         <Hero />
         <About />
         <Services />
@@ -28,6 +28,6 @@ export default function Home() {
       </main>
       <Footer />
       <ScrollToTop />
-    </>
+    </div>
   );
 }

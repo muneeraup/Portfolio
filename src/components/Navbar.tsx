@@ -57,9 +57,17 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
+    const { body, documentElement } = document;
+    if (open) {
+      body.style.overflow = "hidden";
+      documentElement.style.overflow = "hidden";
+    } else {
+      body.style.overflow = "";
+      documentElement.style.overflow = "";
+    }
     return () => {
-      document.body.style.overflow = "";
+      body.style.overflow = "";
+      documentElement.style.overflow = "";
     };
   }, [open]);
 
@@ -85,6 +93,7 @@ export default function Navbar() {
   };
 
   return (
+    <>
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ease-in-out ${
         scrolled
@@ -166,64 +175,59 @@ export default function Navbar() {
           </Link>
           <button
             type="button"
-            className="relative z-[60] flex h-11 w-11 cursor-pointer flex-col items-end justify-center gap-1.5 rounded-lg border border-white/15 bg-white/5 px-2.5 md:hidden"
-            aria-label={open ? "Close menu" : "Menu"}
+            className={`relative z-[60] flex h-11 w-11 cursor-pointer flex-col items-end justify-center gap-1.5 rounded-lg border border-white/15 bg-white/5 px-2.5 md:hidden ${
+              open ? "pointer-events-none opacity-0" : "opacity-100"
+            }`}
+            aria-label="Menu"
             aria-expanded={open}
             aria-controls="mobile-sidebar"
-            onClick={() => (open ? closeMenu() : openMenu())}
+            onClick={openMenu}
           >
-            <span
-              className={`block h-0.5 w-full origin-center bg-white transition-all duration-300 ${
-                open ? "translate-y-[4px] rotate-45" : ""
-              }`}
-            />
-            <span
-              className={`block h-0.5 w-3/4 bg-white transition-all duration-300 ${
-                open ? "w-full -translate-y-[4px] -rotate-45" : ""
-              }`}
-            />
+            <span className="block h-0.5 w-full bg-white" />
+            <span className="block h-0.5 w-3/4 bg-white" />
           </button>
         </div>
       </nav>
+    </header>
 
-      {/* Mobile overlay + drawer — always mounted for reliable open/close */}
+      {/* Clip wrapper prevents closed drawer from creating horizontal scroll */}
       <div
-        className={`fixed inset-0 z-50 bg-black/80 transition-opacity duration-500 md:hidden ${
-          open
-            ? "pointer-events-auto opacity-100"
-            : "pointer-events-none opacity-0"
+        className={`fixed inset-0 z-[70] md:hidden ${
+          open ? "pointer-events-auto" : "pointer-events-none"
         }`}
-        onClick={closeMenu}
         aria-hidden={!open}
-      />
-
-      <aside
-        id="mobile-sidebar"
-        role="dialog"
-        aria-modal="true"
-        aria-label="Mobile navigation"
-        aria-hidden={!open}
-        className={`fixed top-0 right-0 z-50 h-full w-full transform border-l border-white/20 bg-black transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] sm:w-[25rem] md:hidden ${
-          open
-            ? "pointer-events-auto translate-x-0"
-            : "pointer-events-none translate-x-full"
-        }`}
       >
-        <div className="relative z-10 flex h-full flex-col px-8 py-10">
-          <div className="mb-8 flex items-center justify-between border-b border-white/20 pb-8">
+        <div
+          className={`absolute inset-0 bg-black/80 transition-opacity duration-500 ${
+            open ? "opacity-100" : "opacity-0"
+          }`}
+          onClick={closeMenu}
+        />
+
+        <aside
+          id="mobile-sidebar"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Mobile navigation"
+          className={`absolute inset-y-0 right-0 flex h-full w-[min(100%,24rem)] flex-col border-l border-white/20 bg-black transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+            open ? "translate-x-0" : "translate-x-full"
+          }`}
+        >
+        <div className="relative z-10 flex h-full flex-col overflow-x-hidden px-6 py-8 sm:px-8 sm:py-10">
+          <div className="mb-8 flex items-center justify-between border-b border-white/20 pb-6">
             <h2 className="text-xl font-bold uppercase tracking-widest text-white">
               Menu
             </h2>
             <button
               type="button"
-              className="group flex items-center justify-center text-white transition-colors duration-300 hover:text-accent focus-visible:outline-none"
+              className="group inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-white/15 bg-white/5 text-white transition-colors duration-300 hover:border-accent/40 hover:text-accent focus-visible:outline-none"
               aria-label="Close menu"
               onClick={closeMenu}
             >
               <X
                 className="transition-transform duration-500 group-hover:rotate-90"
-                size={36}
-                strokeWidth={1}
+                size={28}
+                strokeWidth={1.5}
               />
             </button>
           </div>
@@ -251,15 +255,15 @@ export default function Navbar() {
                         onClick={() => setMobilePortfolioOpen((v) => !v)}
                         aria-expanded={mobilePortfolioOpen}
                       >
-                        <span
-                          className={`text-4xl font-black uppercase tracking-tighter transition-colors duration-300 sm:text-5xl ${
-                            itemActive || mobilePortfolioOpen
-                              ? "text-accent"
-                              : "text-white group-hover:text-accent"
-                          }`}
-                        >
-                          {link.label}
-                        </span>
+                            <span
+                              className={`text-3xl font-black uppercase tracking-tighter transition-colors duration-300 sm:text-5xl ${
+                                itemActive || mobilePortfolioOpen
+                                  ? "text-accent"
+                                  : "text-white group-hover:text-accent"
+                              }`}
+                            >
+                              {link.label}
+                            </span>
                         {mobilePortfolioOpen ? (
                           <Minus className="h-6 w-6 text-white group-hover:text-accent" />
                         ) : (
@@ -311,7 +315,7 @@ export default function Navbar() {
                     onClick={closeMenu}
                   >
                     <span
-                      className={`text-4xl font-black uppercase tracking-tighter transition-colors duration-300 sm:text-5xl ${
+                      className={`text-3xl font-black uppercase tracking-tighter transition-colors duration-300 sm:text-5xl ${
                         itemActive
                           ? "text-accent"
                           : "text-white group-hover:text-accent"
@@ -340,7 +344,8 @@ export default function Navbar() {
             </Link>
           </div>
         </div>
-      </aside>
-    </header>
+        </aside>
+      </div>
+    </>
   );
 }

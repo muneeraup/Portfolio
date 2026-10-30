@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import AosInit from "@/components/AosInit";
 import "./globals.css";
@@ -17,6 +17,13 @@ export const metadata: Metadata = {
   title: "Muneer Ahmad | Full Stack Software Engineer",
   description:
     "Engineering modern and scalable software solutions. Transforming ideas into scalable, performant apps for real-world impact.",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  viewportFit: "cover",
 };
 
 export default function RootLayout({

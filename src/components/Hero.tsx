@@ -40,7 +40,7 @@ export default function Hero() {
         </div>
 
         <h1
-          className="mb-6 text-[2.5rem] leading-[1.15] font-extrabold tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl"
+          className="mb-6 text-[2rem] leading-[1.15] font-extrabold tracking-tight text-white break-words sm:text-5xl md:text-6xl lg:text-7xl"
           data-aos="fade-up"
           data-aos-delay="150"
         >

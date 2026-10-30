@@ -98,7 +98,7 @@ export default function Experience() {
           </div>
         </div>
 
-        <div className="relative mt-14 space-y-8 pl-8 sm:pl-10">
+        <div className="relative mt-14 space-y-8 overflow-x-clip pl-8 sm:pl-10">
           <div className="absolute bottom-4 left-[7px] top-3 w-px bg-accent/20 sm:left-[9px]" />
 
           {experiences.map((job, index) => (
