@@ -21,8 +21,11 @@ export const site = {
   country: "PK",
   alumniOf: "The University of Agriculture, Peshawar",
   portrait: "/muneer-ahmad.png",
-  ogImage: "/opengraph-image",
-  ogImageAlt: "Muneer Ahmad — Full Stack Software Engineer",
+  /** Static portrait fills WhatsApp/Facebook left-thumb previews reliably. */
+  ogImage: "/muneer-ahmad.png",
+  ogImageWidth: 1087,
+  ogImageHeight: 1447,
+  ogImageAlt: "Muneer Ahmad Full Stack Developer",
   sameAs: [
     "https://github.com/muneeraup",
     "https://www.linkedin.com/in/muneer-ahmad-770792212/",
