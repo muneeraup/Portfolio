@@ -1,3 +1,5 @@
+import { buildSeo } from "@/components/Seo";
+import { site } from "@/lib/site";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
@@ -10,6 +12,14 @@ import Education from "@/components/Education";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
+
+export const metadata = buildSeo({
+  title: site.title,
+  description: site.description,
+  canonical: "/",
+  ogType: "profile",
+  absolute: true,
+});
 
 export default function Home() {
   return (

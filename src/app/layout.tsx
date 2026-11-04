@@ -1,6 +1,7 @@
-import type { Metadata, Viewport } from "next";
+import type { Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import AosInit from "@/components/AosInit";
+import { buildSeo, Seo } from "@/components/Seo";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -13,11 +14,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Muneer Ahmad | Full Stack Software Engineer",
-  description:
-    "Engineering modern and scalable software solutions. Transforming ideas into scalable, performant apps for real-world impact.",
-};
+export const metadata = buildSeo({ root: true });
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -41,6 +38,7 @@ export default function RootLayout({
         data-aos-easing="ease-out-cubic"
         data-aos-duration="800"
       >
+        <Seo />
         <AosInit />
         {children}
       </body>

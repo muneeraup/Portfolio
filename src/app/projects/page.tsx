@@ -1,17 +1,19 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
+import { buildSeo } from "@/components/Seo";
 import { projects } from "@/data/projects";
 
-export const metadata: Metadata = {
-  title: "Projects | Muneer Ahmad",
+export const metadata = buildSeo({
+  title: "Projects",
   description:
-    "Selected works — full-stack platforms, frontend experiences, and AI-powered applications.",
-};
+    "Selected works by Muneer Ahmad — full-stack platforms, WordPress builds, and business systems.",
+  canonical: "/projects",
+  keywords: ["portfolio", "case studies", "Laravel", "React", "WordPress"],
+});
 
 const summaries: Record<string, string> = {
   proqure:
