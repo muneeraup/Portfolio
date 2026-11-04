@@ -21,10 +21,13 @@ export const site = {
   country: "PK",
   alumniOf: "The University of Agriculture, Peshawar",
   portrait: "/muneer-ahmad.png",
-  /** Static portrait fills WhatsApp/Facebook left-thumb previews reliably. */
-  ogImage: "/muneer-ahmad.png",
-  ogImageWidth: 1087,
-  ogImageHeight: 1447,
+  /**
+   * Compressed 1200x630 JPEG (~44KB). WhatsApp often drops PNGs over ~300KB,
+   * so this static asset is the primary share image.
+   */
+  ogImage: "/og-image.jpg",
+  ogImageWidth: 1200,
+  ogImageHeight: 630,
   ogImageAlt: "Muneer Ahmad Full Stack Developer",
   sameAs: [
     "https://github.com/muneeraup",

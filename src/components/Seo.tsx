@@ -29,6 +29,7 @@ type ShareImage = {
   alt: string;
   width?: number;
   height?: number;
+  type?: string;
 };
 
 const DESCRIPTION_LIMIT = 155;
@@ -62,24 +63,28 @@ function keywordsFor(extra?: string[]) {
 }
 
 function shareImages(image: string | undefined, alt: string): ShareImage[] {
-  const portrait: ShareImage = {
+  const fallback: ShareImage = {
     url: site.ogImage,
     alt: site.ogImageAlt,
     width: site.ogImageWidth,
     height: site.ogImageHeight,
-  };
-  const branded: ShareImage = {
-    url: "/opengraph-image",
-    alt: site.ogImageAlt,
-    width: 1200,
-    height: 630,
+    type: "image/jpeg",
   };
 
+  // Keep a single primary image. Multiple og:image tags confuse WhatsApp.
   if (!image || image === site.ogImage || image === site.portrait) {
-    return [portrait, branded];
+    return [fallback];
   }
 
-  return [{ url: image, alt }, portrait, branded];
+  return [
+    {
+      url: image,
+      alt,
+      width: site.ogImageWidth,
+      height: site.ogImageHeight,
+    },
+    fallback,
+  ];
 }
 
 function openGraphFor(
